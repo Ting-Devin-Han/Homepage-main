@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remote Sensing Feature Enhancement Demo</title>
+  <link rel="stylesheet" href="demo_style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">3DAILab Ting Han</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="research.html">Research</a>
+      <a href="act.html">Activities</a>
+      <a href="demo.html">Demo</a>
+    </nav>
+    <button class="menu-toggle" id="menu-toggle">☰</button>
+  </header>
+
+  <main class="demo-main">
+    <div class="demo-container">
+      <h1>Remote Sensing Building Enhancement Demo</h1>
+      <p class="demo-description">
+        Upload a remote sensing image to generate feature maps with building region enhancement
+      </p>
+
+      <!-- Upload Section -->
+      <div class="upload-section">
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-content">
+            <div class="upload-icon">📁</div>
+            <p>Drag & drop your remote sensing image here</p>
+            <p class="upload-hint">or click to browse</p>
+            <input type="file" id="imageInput" accept="image/*" hidden>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Section -->
+      <div class="results-section" id="resultsSection" style="display: none;">
+        <h2>Processing Results</h2>
+        
+        <div class="image-grid">
+          <!-- Original Image -->
+          <div class="image-item">
+            <h3>Original Image</h3>
+            <div class="image-container">
+              <img id="originalImage" alt="Original remote sensing image">
+            </div>
+          </div>
+
+          <!-- Regular Feature Map -->
+          <div class="image-item">
+            <h3>Regular Feature Map</h3>
+            <div class="image-container">
+              <canvas id="regularFeatureMap"></canvas>
+            </div>
+          </div>
+
+          <!-- Building Enhanced Feature Map -->
+          <div class="image-item">
+            <h3>Building Enhanced Feature Map</h3>
+            <div class="image-container">
+              <canvas id="buildingFeatureMap"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Processing Info -->
+        <div class="processing-info">
+          <h3>Processing Details</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Image Size:</span>
+              <span id="imageSize">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Processing Time:</span>
+              <span id="processingTime">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Building Pixels Detected:</span>
+              <span id="buildingPixels">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Download Section -->
+        <div class="download-section">
+          <button class="download-btn" id="downloadRegular">Download Regular Feature Map</button>
+          <button class="download-btn" id="downloadBuilding">Download Building Enhanced Map</button>
+        </div>
+      </div>
+
+      <!-- Loading Indicator -->
+      <div class="loading" id="loadingIndicator" style="display: none;">
+        <div class="spinner"></div>
+        <p>Processing image...</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 3DAI Lab Ting Han. All rights reserved.</p>
+  </footer>
+
+  <script src="demo.js"></script>
+</body>
+</html> 

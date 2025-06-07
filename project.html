@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chenshu's Research</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header>
+        <div class="logo">Chenshu Liu</div>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="research.html">Research</a>
+          <a href="project.html">Project</a>
+          <a href="experiences.html">Experiences</a>
+          <a href="misc.html">Misc</a>
+          <a href="index_v1.html">Portfolio v1</a>
+        </nav>
+        <button class="menu-toggle" id="menu-toggle">☰</button>
+      </header>
+
+      <main>
+<!-- Add this inside <main>, replacing your old #filter-panel section -->
+    <section id="filter-panel">
+        <div id="filter-panel">
+            <div class="filter-group">
+              <label for="categoryFilter">Category:</label>
+              <select id="categoryFilter">
+                <option value="all">All</option>
+                <option value="ai:cv">AI: Computer Vision</option>
+                <option value="ai:nlp">AI: NLP</option>
+                <option value="ai:llm">AI: LLM</option>
+                <option value="ai:time series model">AI: Time Series</option>
+                <option value="ai:ml">AI: Machine Learning</option>
+                <option value="ai:hci">AI: Human Machine Interaction</option>
+                <option value="ai:rl">AI: Reinforcement Learning</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Wearable">Wearable Technology</option>
+                <option value="Biochemistry">Biochemistry</option>
+                <option value="Material Science">Material Science</option>
+                <option value="Cultural Heritage Conservation">Cultural Heritage Conservation</option>
+                <option value="Archeaology">Archeaology</option>
+                <option value="Education">Education</option>
+                <option value="Additive Manufacturing">Additive Manufacturing</option>
+              </select>
+            </div>
+          
+            <div class="filter-group">
+              <label for="yearFilter">Year:</label>
+              <select id="yearFilter">
+                <option value="all">All</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <!-- Add more years as needed -->
+              </select>
+            </div>
+          
+            <div class="filter-group search-box">
+              <label for="searchInput">Search by Keyword:</label>
+              <input type="text" id="searchInput" placeholder="Enter keyword..." />
+            </div>
+          
+            <div class="filter-group" style="align-self: flex-end;">
+              <button id="applyFilters" class="submit-button">Submit</button>
+            </div>
+          </div>
+          
+      </section>
+
+      <div class="container">
+      <section id="research-grid">
+        <a href="#" class="research-card">
+          <img src="images/research_figures/3D printing conservation Pipeline v2.png" alt="Project Image" />
+          <div class="card-content">
+              <h4 class="project-title">AI-Driven Additive Manufacturing in Cultural Heritage Conservation</h4>
+            <p class="project-description">
+              <strong>Author:</strong> Chenshu Liu
+            </p>
+            <p class="project-description">
+              <strong>Project Description:</strong> This research explores the integration of additive manufacturing (AM) and artificial intelligence (AI) to streamline the fabrication of hydrogel-based conservation materials tailored for artifact conservation, restoration, and preservation.
+            </p>
+            <div class="tags">
+              <span class="tag">#AI:CV</span>
+              <span class="tag">#Cultural Heritage Conservation</span>
+              <span class="tag">#Additive Manufacturing</span>
+              <span class="tag">#2025</span>
+              <span class="tag">#Project</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://github.com/ChenshuLiu/Posture2Melody" class="research-card">
+          <img src="images/research_figures/Posture2Melody_Pipeline.png" alt="Project Image" />
+          <div class="card-content">
+              <h4 class="project-title">Posture2Melody: Mapping human posture to music melody</h4>
+            <p class="project-description">
+              <strong>Author:</strong> Chenshu Liu
+            </p>
+            <p class="project-description">
+              <strong>Project Description:</strong> Posture2Melody is a project that uses a GAN-Transformer-based architecture to generate melodies from human postures. Inspired by the idea that body postures, specifically expansiveness of human posture, reflects emotional states, this project seeks to create a seamless interaction between bodily movement and music.
+            </p>
+            <div class="tags">
+              <span class="tag">#AI:HCI</span>
+              <span class="tag">#AI:CV</span>
+              <span class="tag">#2025</span>
+              <span class="tag">#Project</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://github.com/ChenshuLiu/AERIS" class="research-card">
+          <img src="images/research_figures/AERIS_Graphical_Abstract.png" alt="Project Image" />
+          <div class="card-content">
+              <h4 class="project-title">AERIS: Adaptive Emotional Response and Interactive System</h4>
+            <p class="project-description">
+              <strong>Author:</strong> Chenshu Liu
+            </p>
+            <p class="project-description">
+              <strong>Project Description:</strong> AERIS is an AI-in-the-loop emotionally-aware personal assistant powered by light-weight language model that can locally deploy. The smart personal assistant is can detect your emotions through micro-movements and facial expressions with a built-in emotion detector driven by mediapipe, and can provide empathetic responses.
+            </p>
+            <div class="tags">
+              <span class="tag">#AI:HCI</span>
+              <span class="tag">#AI:CV</span>
+              <span class="tag">#AI:LLM</span>
+              <span class="tag">#2025</span>
+              <span class="tag">#Project</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://github.com/ChenshuLiu/TangibleMIDI" class="research-card">
+          <img src="images/research_figures/Posture2Melody Concept Image.png" alt="Project Image" />
+          <div class="card-content">
+              <h4 class="project-title">TangibleMIDI: A Human-Machine-Interaction-enabled Music Interface</h4>
+            <p class="project-description">
+              <strong>Author:</strong> Chenshu Liu
+            </p>
+            <p class="project-description">
+              <strong>Project Description:</strong> TangibleMIDI uses hand landmarks, captured by Mediapipe, to dynamically control audio data. Breaking the constraint from physical musical instruments.
+            </p>
+            <div class="tags">
+              <span class="tag">#AI:HCI</span>
+              <span class="tag">#2025</span>
+              <span class="tag">#Project</span>
+            </div>
+          </div>
+        </a>
+
+       
+        <!-- Repeat for more projects -->
+      </section>
+    </div>
+
+      </main>
+
+  <footer>
+    <p>&copy; 2025 Chenshu Liu. All rights reserved.</p>
+  </footer>
+  <script src="project.js"></script>
+</body>
+</html>
