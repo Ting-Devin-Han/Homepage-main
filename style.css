@@ -671,3 +671,95 @@
       justify-content: center;
     }
   }
+
+  #partners-list {
+    display: grid;
+    gap: 16px;
+  }
+  
+  /* 卡片容器：左图右文 */
+  .person-card {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 14px;
+    background: var(--card-bg, #fff);
+    box-shadow: 0 4px 18px rgba(0,0,0,.06);
+    text-decoration: none;
+    color: inherit;
+    align-items: flex-start;
+  }
+  
+  .person-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  }
+  
+  /* 头像：默认方圆角；移动端变圆形 */
+  .person-avatar {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex: 0 0 120px;
+    background: #f4f5f7;
+  }
+  
+  /* 文本区域 */
+  .person-body {
+    flex: 1 1 auto;
+    min-width: 0; /* 避免溢出 */
+  }
+  
+  .person-head {
+    margin-bottom: .25rem;
+  }
+  
+  .person-name {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+  
+  .person-affil {
+    opacity: .75;
+    font-size: .92rem;
+  }
+  
+  .person-intro {
+    margin: .5rem 0 .75rem;
+  }
+  
+  /* 标签沿用你站点的 .tag，如果没有可用以下兜底 */
+  .person-meta .tag {
+    display: inline-block;
+    font-size: .75rem;
+    padding: .2rem .5rem;
+    border-radius: 999px;
+    background: #eef2ff;
+    color: #3843d0;
+    margin-right: .35rem;
+    margin-bottom: .35rem;
+  }
+  
+  .person-links {
+    margin-top: .25rem;
+    display: flex; gap: .75rem; flex-wrap: wrap;
+  }
+  .person-links a { color: var(--link, #2b63ff); }
+  
+  /* 响应式：窄屏时上下排版，头像改圆形且居中 */
+  @media (max-width: 720px) {
+    .person-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .person-avatar {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      flex: none;
+    }
+    .person-links { justify-content: center; }
+  }

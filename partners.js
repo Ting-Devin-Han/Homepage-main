@@ -17,7 +17,7 @@ const collabFilter = $('collabFilter');
 const searchInput  = $('searchInput');
 const applyBtn     = $('applyFilters');
 const resetBtn     = $('resetFilters');
-const cards        = Array.from(document.querySelectorAll('#partners-grid .research-card'));
+const cards        = Array.from(document.querySelectorAll('#partners-list .person-card'));
 
 function normalize(str) {
   return (str || '').toLowerCase().trim();
