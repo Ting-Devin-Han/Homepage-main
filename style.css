@@ -705,8 +705,6 @@
     max-width: 1000px;
     margin: 0 auto;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
   
   /* 卡片容器：左图右文 */
