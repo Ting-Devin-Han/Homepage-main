@@ -719,7 +719,7 @@
       0 2px 4px -1px rgba(0, 0, 0, 0.06);
     text-decoration: none;
     color: inherit;
-    align-items: flex-start;
+    align-items: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
@@ -766,32 +766,9 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
-  .person-avatar-overlay {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    opacity: 0;
-    transform: scale(0.8);
-    transition: all 0.3s ease;
-  }
-  
   .person-card:hover .person-avatar {
     transform: scale(1.05);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .person-card:hover .person-avatar-overlay {
-    opacity: 1;
-    transform: scale(1);
   }
   
   /* 文本区域 */
@@ -897,18 +874,6 @@
       width: 100px;
       height: 100px;
       border-radius: 50%;
-    }
-    
-    .person-avatar-overlay {
-      width: 28px;
-      height: 28px;
-      top: -6px;
-      right: -6px;
-    }
-    
-    .person-avatar-overlay svg {
-      width: 16px;
-      height: 16px;
     }
     
     .person-links { 
