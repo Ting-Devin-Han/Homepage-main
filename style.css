@@ -753,7 +753,7 @@
   /* 头像：默认方圆角；移动端变圆形 */
   .person-avatar-container {
     position: relative;
-    flex: 0 0 120px;
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -761,7 +761,7 @@
   
   .person-avatar {
     width: 120px;
-    height: 160px;
+    height: auto;
     object-fit: contain;
     border-radius: 16px;
     background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
