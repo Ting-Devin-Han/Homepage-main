@@ -762,7 +762,7 @@
   .person-avatar {
     width: 160px;
     height: 160px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 16px;
     background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
     border: 3px solid rgba(255, 255, 255, 0.8);
