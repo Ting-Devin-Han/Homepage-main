@@ -762,8 +762,8 @@
   }
   
   .person-avatar {
-    width: 120px;
-    height: 120px;
+    width: 160px;
+    height: 160px;
     object-fit: cover;
     border-radius: 16px;
     background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
