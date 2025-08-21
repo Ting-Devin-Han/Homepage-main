@@ -771,7 +771,7 @@
   
   .person-card:hover .person-avatar {
     transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 20px rgb(255, 254, 254);
   }
   
   /* 文本区域 */
