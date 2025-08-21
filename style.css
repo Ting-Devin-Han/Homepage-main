@@ -760,7 +760,7 @@
   }
   
   .person-avatar {
-    width: 160px;
+    width: 120px;
     height: 160px;
     object-fit: contain;
     border-radius: 16px;
