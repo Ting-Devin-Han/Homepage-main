@@ -717,7 +717,7 @@
     border: 1px solid rgba(226, 232, 240, 0.8);
     box-shadow: 
       0 4px 6px -1px rgba(226, 232, 240, 0.8),
-      0 2px 4px -1px rgba(226, 232, 240, 0.8);
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
     text-decoration: none;
     color: inherit;
     align-items: center;
@@ -900,3 +900,19 @@
       margin: 12px 0 16px 0;
     }
   }
+
+  .person-card .person-head,
+.person-card header.person-head {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0;               /* 需要间距就改成 8px 或 12px */
+  margin: 0 0 12px;
+}
+
+/* 万一是伪元素画的背景，也一并清掉 */
+.person-card .person-head::before,
+.person-card .person-head::after {
+  content: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
