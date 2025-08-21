@@ -674,35 +674,124 @@
 
   #partners-list {
     display: grid;
-    gap: 16px;
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .page-header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding: 32px 0;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 16px 0;
+    letter-spacing: -0.025em;
+    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .page-description {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
   }
   
   /* 卡片容器：左图右文 */
   .person-card {
     display: flex;
-    gap: 16px;
-    padding: 16px;
-    border-radius: 14px;
-    background: var(--card-bg, #fff);
-    box-shadow: 0 4px 18px rgba(0,0,0,.06);
+    gap: 20px;
+    padding: 24px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
     text-decoration: none;
     color: inherit;
     align-items: flex-start;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .person-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
   
   .person-card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    transform: translateY(-4px);
+    box-shadow: 
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: rgba(59, 130, 246, 0.2);
+  }
+  
+  .person-card:hover::before {
+    opacity: 1;
   }
   
   /* 头像：默认方圆角；移动端变圆形 */
+  .person-avatar-container {
+    position: relative;
+    flex: 0 0 120px;
+  }
+  
   .person-avatar {
     width: 120px;
     height: 120px;
     object-fit: cover;
-    border-radius: 12px;
-    flex: 0 0 120px;
-    background: #f4f5f7;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .person-avatar-overlay {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+  }
+  
+  .person-card:hover .person-avatar {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .person-card:hover .person-avatar-overlay {
+    opacity: 1;
+    transform: scale(1);
   }
   
   /* 文本区域 */
@@ -712,22 +801,30 @@
   }
   
   .person-head {
-    margin-bottom: .25rem;
+    margin-bottom: 12px;
   }
   
   .person-name {
-    margin: 0;
-    font-size: 1.05rem;
-    line-height: 1.35;
+    margin: 0 0 4px 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #1e293b;
+    letter-spacing: -0.025em;
   }
   
   .person-affil {
-    opacity: .75;
-    font-size: .92rem;
+    opacity: 0.8;
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 500;
   }
   
   .person-intro {
-    margin: .5rem 0 .75rem;
+    margin: 16px 0 20px 0;
+    line-height: 1.6;
+    color: #475569;
+    font-size: 0.95rem;
   }
   
   /* 标签沿用你站点的 .tag，如果没有可用以下兜底 */
@@ -743,23 +840,92 @@
   }
   
   .person-links {
-    margin-top: .25rem;
-    display: flex; gap: .75rem; flex-wrap: wrap;
+    margin-top: 16px;
+    display: flex; 
+    gap: 12px; 
+    flex-wrap: wrap;
   }
-  .person-links a { color: var(--link, #2b63ff); }
+  
+  .person-links a { 
+    color: #3b82f6; 
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(59, 130, 246, 0.1);
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+  }
+  
+  .person-links a:hover {
+    background: rgba(59, 130, 246, 0.15);
+    color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+  }
   
   /* 响应式：窄屏时上下排版，头像改圆形且居中 */
   @media (max-width: 720px) {
+    .page-header {
+      margin-bottom: 32px;
+      padding: 24px 0;
+    }
+    
+    .page-title {
+      font-size: 2rem;
+    }
+    
+    .page-description {
+      font-size: 1rem;
+      padding: 0 16px;
+    }
+    
     .person-card {
       flex-direction: column;
       align-items: center;
       text-align: center;
+      padding: 20px;
+      gap: 16px;
     }
-    .person-avatar {
-      width: 112px;
-      height: 112px;
-      border-radius: 50%;
+    
+    .person-avatar-container {
       flex: none;
     }
-    .person-links { justify-content: center; }
+    
+    .person-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+    
+    .person-avatar-overlay {
+      width: 28px;
+      height: 28px;
+      top: -6px;
+      right: -6px;
+    }
+    
+    .person-avatar-overlay svg {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .person-links { 
+      justify-content: center; 
+      gap: 8px;
+    }
+    
+    .person-links a {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    }
+    
+    .person-name {
+      font-size: 1.15rem;
+    }
+    
+    .person-intro {
+      margin: 12px 0 16px 0;
+    }
   }
