@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3DAI Lab — Partners</title>
+  <!-- 复用你现有的样式表 -->
+  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Academic, industry and government partners of 3DAI Lab." />
+</head>
+<body>
+  <header>
+    <div class="logo">3DAILab Ting Han</div>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="research.html">Research</a>
+      <a href="act.html">Activities</a>
+      <a href="partners.html" class="active">Partners</a>
+    </nav>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu" aria-expanded="false">☰</button>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1 style="margin: 1.25rem 0 0.5rem;">Partners & Collaborators</h1>
+      <p style="margin-top:.25rem;opacity:.8;">
+        We work closely with universities, industry, and public sectors around the world. Use the filters to explore partners.
+      </p>
+
+      <!-- 筛选面板 -->
+      <section id="filter-panel" aria-label="Filters">
+        <div id="filter-panel" class="filter-panel">
+          <div class="filter-group">
+            <label for="typeFilter">Type:</label>
+            <select id="typeFilter">
+              <option value="all">All</option>
+              <option value="academia">Academia</option>
+              <option value="industry">Industry</option>
+              <option value="government">Government/NGO</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="regionFilter">Region:</label>
+            <select id="regionFilter">
+              <option value="all">All</option>
+              <option value="europe">Europe</option>
+              <option value="china">China</option>
+              <option value="na">North America</option>
+              <option value="global">Global</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="collabFilter">Collaboration:</label>
+            <select id="collabFilter">
+              <option value="all">All</option>
+              <option value="research">Research Project</option>
+              <option value="dataset">Dataset/Benchmark</option>
+              <option value="funding">Funding/Grant</option>
+              <option value="talent">Student/Internship</option>
+              <option value="event">Workshop/Competition</option>
+            </select>
+          </div>
+
+          <div class="filter-group search-box">
+            <label for="searchInput">Search:</label>
+            <input type="text" id="searchInput" placeholder="Keyword, organization, keyword..." />
+          </div>
+
+          <div class="filter-group" style="align-self:flex-end;gap:.5rem;display:flex;">
+            <button id="applyFilters" class="submit-button">Apply</button>
+            <button id="resetFilters" class="submit-button" type="button" style="background:#777;">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 卡片栅格 -->
+      <section id="partners-grid" aria-live="polite">
+        <!-- Academia -->
+        <a class="research-card"
+           href="https://www.gla.ac.uk/"
+           target="_blank" rel="noopener"
+           data-type="academia" data-region="europe" data-collab="research funding talent global">
+          <img src="images/partners/uofg.png" alt="University of Glasgow logo" />
+          <div class="card-content">
+            <h4 class="project-title">University of Glasgow</h4>
+            <p class="project-description">
+              Joint research on 3D vision, GeoAI and foundation models; student exchange and co-advised PhDs.
+            </p>
+            <div class="tags">
+              <span class="tag">Academia</span><span class="tag">Europe</span>
+              <span class="tag">Research</span><span class="tag">Talent</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="research-card"
+           href="https://www.sysu.edu.cn/"
+           target="_blank" rel="noopener"
+           data-type="academia" data-region="china" data-collab="research dataset talent">
+          <img src="images/partners/sysu.png" alt="Sun Yat-sen University logo" />
+          <div class="card-content">
+            <h4 class="project-title">Sun Yat-sen University</h4>
+            <p class="project-description">
+              Collaboration on multimodal geospatial learning, 3D scene understanding, and large-scale datasets.
+            </p>
+            <div class="tags">
+              <span class="tag">Academia</span><span class="tag">China</span>
+              <span class="tag">Research</span><span class="tag">Dataset</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Industry -->
+        <a class="research-card"
+           href="https://www.nvidia.com/"
+           target="_blank" rel="noopener"
+           data-type="industry" data-region="global" data-collab="research talent event">
+          <img src="images/partners/nvidia.png" alt="NVIDIA logo" />
+          <div class="card-content">
+            <h4 class="project-title">NVIDIA</h4>
+            <p class="project-description">
+              Co-development on 3D generative models, accelerated training, and workshops for research community.
+            </p>
+            <div class="tags">
+              <span class="tag">Industry</span><span class="tag">Global</span>
+              <span class="tag">Research</span><span class="tag">Workshop</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="research-card"
+           href="https://www.esri.com/"
+           target="_blank" rel="noopener"
+           data-type="industry" data-region="na" data-collab="research dataset event">
+          <img src="images/partners/esri.png" alt="Esri logo" />
+          <div class="card-content">
+            <h4 class="project-title">Esri</h4>
+            <p class="project-description">
+              Collaboration on GeoAI tooling, remote sensing benchmarks, and applied urban analytics.
+            </p>
+            <div class="tags">
+              <span class="tag">Industry</span><span class="tag">North America</span>
+              <span class="tag">Research</span><span class="tag">Dataset</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Government / NGO -->
+        <a class="research-card"
+           href="https://www.ordnancesurvey.co.uk/"
+           target="_blank" rel="noopener"
+           data-type="government" data-region="europe" data-collab="dataset research funding">
+          <img src="images/partners/os.png" alt="Ordnance Survey logo" />
+          <div class="card-content">
+            <h4 class="project-title">Ordnance Survey (UK)</h4>
+            <p class="project-description">
+              High-quality geospatial data access and joint research on large-scale mapping and 3D reconstruction.
+            </p>
+            <div class="tags">
+              <span class="tag">Gov/NGO</span><span class="tag">Europe</span>
+              <span class="tag">Dataset</span><span class="tag">Research</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 可继续添加更多合作伙伴，复制以上卡片并改 data-* 与内容 -->
+      </section>
+
+      <p style="margin-top:1.5rem;font-size:.9rem;opacity:.7;">
+        * Logos are used for academic presentation only. Please contact us for updates or corrections.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 3DAI Lab Ting Han. All rights reserved.</p>
+  </footer>
+
+  <!-- 合作伙伴筛选脚本 -->
+  <script src="partners.js"></script>
+</body>
+</html>
