@@ -914,4 +914,80 @@
   content: none !important;
   background: transparent !important;
   box-shadow: none !important;
+
+/* ===== Language Switch (segmented pill) ===== */
+.lang-switch{
+  margin-left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+}
+
+.lang-btn{
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: rgba(255,255,255,0.88);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  line-height: 1;
+  transition: transform .15s ease, background .15s ease, color .15s ease, box-shadow .15s ease;
+}
+
+.lang-btn:hover{
+  background: rgba(255,255,255,0.14);
+  transform: translateY(-1px);
+}
+
+.lang-btn:active{
+  transform: translateY(0px) scale(0.98);
+}
+
+.lang-btn.active{
+  color: #0b1220;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+}
+
+/* keyboard focus */
+.lang-btn:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.45);
+}
+
+/* If your header is light background, switch to a light theme automatically */
+header.light .lang-switch{
+  border: 1px solid rgba(15,23,42,0.12);
+  background: rgba(15,23,42,0.03);
+  box-shadow: 0 8px 24px rgba(2,6,23,0.06);
+}
+header.light .lang-btn{
+  color: rgba(15,23,42,0.78);
+}
+header.light .lang-btn:hover{
+  background: rgba(15,23,42,0.06);
+}
+header.light .lang-btn.active{
+  color: rgba(15,23,42,0.92);
+  background: #ffffff;
+  box-shadow: 0 10px 22px rgba(2,6,23,0.10);
+}
+
+/* mobile: slightly tighter */
+@media (max-width: 768px){
+  .lang-switch{ padding: 5px; gap: 4px; }
+  .lang-btn{ padding: 7px 10px; font-size: 12px; }
+}
+
 }
