@@ -11,74 +11,51 @@
         <div class="logo">3DAILab Ting Han</div>
         <nav class="nav-links">
           <a href="index.html">Home</a>
-          <a href="research.html">Research</a>
+          <a href="research.html" class="active" aria-current="page">Research</a>
           <a href="act.html">Activities</a>
-          <a href="partners.html" class="active">Partners</a>
+          <a href="partners.html">Partners</a>
 
         </nav>
-        <button class="menu-toggle" id="menu-toggle">☰</button>
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
       </header>
 
       <main>
-<!-- Add this inside <main>, replacing your old #filter-panel section -->
-    <!-- <section id="filter-panel">
-        <div id="filter-panel">
-            <div class="filter-group">
-              <label for="categoryFilter">Category:</label>
-              <select id="categoryFilter">
-                <option value="all">All</option>
-                <option value="ai:cv">AI: Computer Vision</option>
-                <option value="ai:nlp">AI: NLP</option>
-                <option value="ai:llm">AI: LLM</option>
-                <option value="ai:time series model">AI: Time Series</option>
-                <option value="ai:ml">AI: Machine Learning</option>
-                <option value="ai:hci">AI: Human Machine Interaction</option>
-                <option value="ai:rl">AI: Reinforcement Learning</option>
-                <option value="Healthcare">Healthcare</option>
-                <option value="Wearable">Wearable Technology</option>
-                <option value="Biochemistry">Biochemistry</option>
-                <option value="Material Science">Material Science</option>
-                <option value="Cultural Heritage Conservation">Cultural Heritage Conservation</option>
-                <option value="Archeaology">Archeaology</option>
-                <option value="Education">Education</option>
-                <option value="Additive Manufacturing">Additive Manufacturing</option>
-              </select>
-            </div>
-          
-            <div class="filter-group">
-              <label for="yearFilter">Year:</label>
-              <select id="yearFilter">
-                <option value="all">All</option>
-                <option value="2025">2025</option>
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-              </select>
-            </div>
-          
-            <div class="filter-group">
-              <label for="typeFilter">Type:</label>
-              <select id="typeFilter">
-                <option value="all">All</option>
-                <option value="Journal">Journal</option>
-                <option value="Conference">Conference</option>
-              </select>
-            </div>
-          
-            <div class="filter-group search-box">
-              <label for="searchInput">Search by Keyword:</label>
-              <input type="text" id="searchInput" placeholder="Enter keyword..." />
-            </div>
-          
-            <div class="filter-group" style="align-self: flex-end;">
-              <button id="applyFilters" class="submit-button">Submit</button>
-            </div>
-          </div>
-          
-      </section> -->
-        <div class="container">
+    <section id="filter-panel" aria-label="Publication filters">
+      <div class="filter-group">
+        <label for="yearFilter">Year</label>
+        <select id="yearFilter">
+          <option value="all">All years</option>
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="typeFilter">Type</label>
+        <select id="typeFilter">
+          <option value="all">All types</option>
+          <option value="journal">Journal</option>
+          <option value="conference">Conference</option>
+          <option value="workshop">Workshop</option>
+        </select>
+      </div>
+
+      <div class="filter-group search-box">
+        <label for="searchInput">Search</label>
+        <input type="search" id="searchInput" placeholder="Title, author, venue or topic" />
+      </div>
+
+      <div class="filter-actions">
+        <button id="applyFilters" class="submit-button" type="button">Apply</button>
+        <button id="resetFilters" class="reset-button" type="button">Reset</button>
+      </div>
+    </section>
+        <div class="container" data-year="2026">
         <h2 class="year-heading">2026</h2>
-        <section id="research-grid">
-          <a href="" class="research-card">
+        <section class="research-grid">
+          <a class="research-card">
             <img src="images/research_figures/HoloWorld.jpg" alt="Project Image" />
             <div class="card-content">
                 <h4 class="project-title">To See a World in a Living Context: Unified Indoor-Outdoor Urban World Generation</h4>
@@ -97,7 +74,7 @@
             </div>
           </a>
 
-          <a href="" class="research-card">
+          <a class="research-card">
             <img src="images/research_figures/TII4-0709.jpg" alt="Project Image" />
             <div class="card-content">
                 <h4 class="project-title">Grounded open-vocabulary 3D LiDAR AI for natural resource surveying</h4>
@@ -116,7 +93,7 @@
             </div>
           </a>
           
-          <a href="" class="research-card">
+          <a class="research-card">
             <img src="images/research_figures/BED.jpg" alt="Project Image" />
             <div class="card-content">
                 <h4 class="project-title">GeoAI for Urban Analytics: Opportunities and Challenges</h4>
@@ -135,7 +112,7 @@
             </div>
           </a>
           
-          <a href="" class="research-card">
+          <a class="research-card">
             <img src="images/research_figures/NeuroComp.png" alt="Project Image" />
             <div class="card-content">
                 <h4 class="project-title">An Efficient Single-Branch Network for Semantic Scene Completion of Building Spaces</h4>
@@ -154,7 +131,7 @@
             </div>
           </a>
           
-          <a href="" class="research-card">
+          <a class="research-card">
             <img src="images/research_figures/TMFF.jpg" alt="Project Image" />
             <div class="card-content">
                 <h4 class="project-title">Structural Safety Condition Prediction of Rural Houses based on Bidirectional Encoder Representations from Transformers and Multimodal Feature Fusion Model</h4>
@@ -173,7 +150,7 @@
             </div>
           </a>
           
-          <a href="" class="research-card">
+          <a class="research-card">
             <img src="images/research_figures/BAT.gif" alt="Project Image" />
             <div class="card-content">
                 <h4 class="project-title">A Policy-Driven Black-Box Adversarial Example with Location Optimization against 3D Object Detection</h4>
@@ -271,7 +248,7 @@
           <a href="https://www.sciencedirect.com/science/article/pii/S0924271626000031" class="research-card">
             <img src="images/research_figures/FACADE.png" alt="Project Image" />
             <div class="card-content">
-                <h4 class="project-title">City-Facade: A City-Level Large-Scale Point Cloud Building Facade Dataset for Semantic & Instance Segmentation</h4>
+                <h4 class="project-title">City-Facade: A City-Level Large-Scale Point Cloud Building Facade Dataset for Semantic &amp; Instance Segmentation</h4>
               <p class="project-description">
                 Yiping Chen, Jonathan Li, <strong>Ting Han*</strong>, Huifang Feng, Jun Chen, Cheng Wang.
               </p>
@@ -295,7 +272,7 @@
                 Chaolei Wang, Yang Luo, Jing Du, Siyu Chen, Yiping Chen*, <strong>Ting Han*</strong>.
               </p>
               <p class="project-description">
-                <em>Proc. AAAI Conf. Artif. Intell. (AAAI), 2026</em></em>(<strong>CCF-A</strong>)
+                <em>Proc. AAAI Conf. Artif. Intell. (AAAI), 2026.</em> (<strong>CCF-A</strong>)
               </p>
               <div class="tags">
                 <span class="tag">#AI</span>
@@ -320,11 +297,12 @@
             <p><em>Urban Informatics, 2026.</em></p>
           </div>
         </div>
+      </div>
           
 
-        <div class="container">
+        <div class="container" data-year="2025">
         <h2 class="year-heading">2025</h2>
-        <section id="research-grid">
+        <section class="research-grid">
 
           <a href="https://dl.acm.org/doi/abs/10.1145/3764912.3770830" class="research-card">
             <img src="images/research_figures/accident.jpg" alt="Project Image" />
@@ -383,7 +361,7 @@
             </div>
           </a>
 
-          <a href="" class="research-card">
+          <a class="research-card">
             <img src="images/research_figures/LiDAR-DHMT.jpg" alt="Project Image" />
             <div class="card-content">
                 <h4 class="project-title">LiDAR-DHMT: LiDAR-Adaptive Dual Hierarchical Mask Transformer for Robust Freespace Detection and Semantic Segmentation</h4>
@@ -410,7 +388,7 @@
                 Jin Ma<sup>#</sup>, <strong>Ting Han<sup>#</sup></strong>, Chaolei Wang, Xiaohai Zhang, Xinchang Zhang, Wuming Zhang*, Yiping Chen*.
               </p>
               <p class="project-description">
-                <em>Urban Forestry & Urban Greening, 2025.</em>(<strong>JCR Q1, IF=6.7</strong>)
+                <em>Urban Forestry &amp; Urban Greening, 2025.</em> (<strong>JCR Q1, IF=6.7</strong>)
               </p>
               <div class="tags">
                 <span class="tag">#Remote Sensing</span>
@@ -462,7 +440,7 @@
           <a href="https://arxiv.org/abs/2504.12753" class="research-card">
             <img src="images/research_figures/DepthForge.jpg" alt="Project Image" />
             <div class="card-content">
-                <h4 class="project-title">Stronger, Steadier & Superior: Geometric Consistency in Depth VFM Forges Domain Generalized Semantic Segmentation</h4>
+                <h4 class="project-title">Stronger, Steadier &amp; Superior: Geometric Consistency in Depth VFM Forges Domain Generalized Semantic Segmentation</h4>
               <p class="project-description">
                 Siyu Chen, <strong>Ting Han*</strong>, Changshe Zhang, Xin Luo, Meiliu Wu, Guorong Cai, Jinhe Su*.
               </p>
@@ -619,7 +597,7 @@
                   Qiaoqiao Hao, <strong>Ting Han</strong>, Yujun Liu, Shangfeng Huang, Duxin Zhu, Jinhe Su, Yundong Wu, Guorong Cai*
                 </p>
                 <p class="project-description">
-                  IEEE Int. Conf. Acoust. Speech Signal Process. (ICASSP), 2025.</em> (<strong>CCF-B</strong>)
+                  <em>IEEE Int. Conf. Acoust. Speech Signal Process. (ICASSP), 2025.</em> (<strong>CCF-B</strong>)
                 </p>
                 <div class="tags">
                   <span class="tag">#AI</span>
@@ -651,9 +629,9 @@
         </div>
       </div>
 
-      <div class="container">
+      <div class="container" data-year="2024">
         <h2 class="year-heading">2024</h2>
-        <section id="research-grid">
+        <section class="research-grid">
 
             <a href="https://www.sciencedirect.com/science/article/pii/S156984322400459X" class="research-card">
               <img src="images/research_figures/ASGFormer.gif" alt="Project Image" />
@@ -749,9 +727,9 @@
         </div>
       </div>
 
-      <div class="container">
+      <div class="container" data-year="2023">
         <h2 class="year-heading">2023</h2>
-        <section id="research-grid">
+        <section class="research-grid">
 
         </section>
         <div class="pub-item">

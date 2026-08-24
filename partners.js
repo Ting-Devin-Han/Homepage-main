@@ -1,82 +1,69 @@
-// Mobile nav toggle（与站点保持一致）
-const menuBtn = document.getElementById('menu-toggle');
-const nav = document.querySelector('.nav-links');
-if (menuBtn) {
-  menuBtn.addEventListener('click', () => {
-    const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
-    menuBtn.setAttribute('aria-expanded', String(!expanded));
-    nav.classList.toggle('open');
-  });
-}
+(() => {
+  const menuButton = document.getElementById('menu-toggle');
+  const navigation = document.querySelector('.nav-links');
 
-// 简单筛选与搜索
-const $ = (id) => document.getElementById(id);
-const typeFilter   = $('typeFilter');
-const regionFilter = $('regionFilter');
-const collabFilter = $('collabFilter');
-const searchInput  = $('searchInput');
-const applyBtn     = $('applyFilters');
-const resetBtn     = $('resetFilters');
-const cards        = Array.from(document.querySelectorAll('#partners-list .person-card'));
-
-function normalize(str) {
-  return (str || '').toLowerCase().trim();
-}
-
-function applyFilters() {
-  const t = typeFilter.value;
-  const r = regionFilter.value;
-  const c = collabFilter.value;
-  const q = normalize(searchInput.value);
-
-  let visibleCount = 0;
-
-  cards.forEach(card => {
-    const type   = card.dataset.type;
-    const region = card.dataset.region;
-    const collab = card.dataset.collab || '';
-    const text   = normalize(card.innerText);
-
-    const passType   = (t === 'all') || type === t;
-    const passRegion = (r === 'all') || region === r;
-    const passCollab = (c === 'all') || collab.split(/\s+/).includes(c);
-    const passSearch = !q || text.includes(q);
-
-    const show = passType && passRegion && passCollab && passSearch;
-    card.style.display = show ? '' : 'none';
-    if (show) visibleCount++;
-  });
-
-  // 为空时给点反馈
-  const grid = document.getElementById('partners-grid');
-  let emptyNote = document.getElementById('no-result-note');
-  if (!visibleCount) {
-    if (!emptyNote) {
-      emptyNote = document.createElement('div');
-      emptyNote.id = 'no-result-note';
-      emptyNote.style.margin = '1rem 0';
-      emptyNote.style.opacity = '.75';
-      emptyNote.textContent = 'No partners match current filters.';
-      grid.after(emptyNote);
-    }
-  } else if (emptyNote) {
-    emptyNote.remove();
+  if (menuButton && navigation) {
+    menuButton.addEventListener('click', () => {
+      const isOpen = navigation.classList.toggle('active');
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+    });
   }
-}
 
-function resetFilters() {
-  typeFilter.value   = 'all';
-  regionFilter.value = 'all';
-  collabFilter.value = 'all';
-  searchInput.value  = '';
+  const typeFilter = document.getElementById('typeFilter');
+  const regionFilter = document.getElementById('regionFilter');
+  const collabFilter = document.getElementById('collabFilter');
+  const searchInput = document.getElementById('searchInput');
+  const applyButton = document.getElementById('applyFilters');
+  const resetButton = document.getElementById('resetFilters');
+  const list = document.getElementById('partners-list');
+
+  const controls = [typeFilter, regionFilter, collabFilter, searchInput, applyButton, resetButton];
+  if (!list || controls.some((control) => !control)) return;
+
+  const cards = Array.from(list.querySelectorAll('.person-card'));
+  const normalize = (value) => (value || '').toLowerCase().trim();
+
+  function applyFilters() {
+    const type = typeFilter.value;
+    const region = regionFilter.value;
+    const collaboration = collabFilter.value;
+    const query = normalize(searchInput.value);
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const collaborationTags = (card.dataset.collab || '').split(/\s+/);
+      const show =
+        (type === 'all' || card.dataset.type === type) &&
+        (region === 'all' || card.dataset.region === region) &&
+        (collaboration === 'all' || collaborationTags.includes(collaboration)) &&
+        (!query || normalize(card.textContent).includes(query));
+
+      card.hidden = !show;
+      if (show) visibleCount += 1;
+    });
+
+    let emptyNote = document.getElementById('no-result-note');
+    if (visibleCount === 0) {
+      if (!emptyNote) {
+        emptyNote = document.createElement('p');
+        emptyNote.id = 'no-result-note';
+        emptyNote.className = 'filter-empty-note';
+        emptyNote.textContent = 'No partners match the current filters.';
+        list.insertAdjacentElement('afterend', emptyNote);
+      }
+    } else if (emptyNote) {
+      emptyNote.remove();
+    }
+  }
+
+  applyButton.addEventListener('click', applyFilters);
+  resetButton.addEventListener('click', () => {
+    typeFilter.value = 'all';
+    regionFilter.value = 'all';
+    collabFilter.value = 'all';
+    searchInput.value = '';
+    applyFilters();
+  });
+  searchInput.addEventListener('input', applyFilters);
   applyFilters();
-}
-
-applyBtn.addEventListener('click', applyFilters);
-resetBtn.addEventListener('click', resetFilters);
-searchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') applyFilters();
-});
-
-// 初次渲染
-applyFilters();
+})();

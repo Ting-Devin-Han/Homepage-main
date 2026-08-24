@@ -37,6 +37,11 @@
     text-decoration: none;
     padding: 0.5rem;
   }
+
+  .nav-links a.active,
+  .nav-links a[aria-current="page"] {
+    border-bottom: 2px solid #60a5fa;
+  }
   
   .menu-toggle {
     display: none;

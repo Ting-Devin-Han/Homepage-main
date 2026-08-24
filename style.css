@@ -37,6 +37,11 @@
     text-decoration: none;
     padding: 0.5rem;
   }
+
+  .nav-links a.active,
+  .nav-links a[aria-current="page"] {
+    border-bottom: 2px solid #60a5fa;
+  }
   
   .menu-toggle {
     display: none;
@@ -412,6 +417,26 @@
   .submit-button:hover {
     background-color: #2563eb;
   }
+
+  .filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .reset-button {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    color: #374151;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .reset-button:hover {
+    background: #f3f4f6;
+  }
   
   .container {
     max-width: 1400px;
@@ -443,7 +468,8 @@
     border-radius: 2px;
   }
 
-  #research-grid {
+  #research-grid,
+  .research-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
@@ -498,18 +524,63 @@
     color: #374151;
   }
 
-  .research-card {
+  .research-card[href] {
     cursor: pointer;
+  }
+
+  .research-card:not([href]) {
+    cursor: default;
+  }
+
+  .research-card[hidden] {
+    display: none !important;
+  }
+
+  .project-image-placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 180px;
+    padding: 1rem;
+    color: #64748b;
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    text-align: center;
+  }
+
+  .container[hidden],
+  .pub-item[hidden],
+  .person-card[hidden] {
+    display: none !important;
+  }
+
+  .filter-empty-note {
+    max-width: 1400px;
+    margin: 1rem auto 2rem;
+    padding: 0 1rem;
+    color: #64748b;
+    text-align: center;
+  }
+
+  .legacy-notice {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem 1.25rem;
+    color: #475569;
+    background: #f8fafc;
+    border-left: 4px solid #94a3b8;
+    border-radius: 8px;
   }
   
   @media (max-width: 1000px) {
-    #research-grid {
+    #research-grid,
+    .research-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
   
   @media (max-width: 600px) {
-    #research-grid {
+    #research-grid,
+    .research-grid {
       grid-template-columns: 1fr;
     }
   }
@@ -914,6 +985,7 @@
   content: none !important;
   background: transparent !important;
   box-shadow: none !important;
+}
 
 /* ===== Language Switch (segmented pill) ===== */
 .lang-switch{
@@ -988,6 +1060,4 @@ header.light .lang-btn.active{
 @media (max-width: 768px){
   .lang-switch{ padding: 5px; gap: 4px; }
   .lang-btn{ padding: 7px 10px; font-size: 12px; }
-}
-
 }

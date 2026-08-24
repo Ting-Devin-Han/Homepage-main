@@ -1,80 +1,94 @@
 (() => {
-    const grid = document.getElementById('research-grid');
-    const allCards = Array.from(grid.querySelectorAll('.research-card'));
-  
-    document.getElementById('applyFilters').addEventListener('click', () => {
-      const category = document.getElementById('categoryFilter').value.toLowerCase();
-      const year = document.getElementById('yearFilter').value;
-      const type = document.getElementById('typeFilter').value.toLowerCase();
-      const keyword = document.getElementById('searchInput').value.toLowerCase();
-  
-      // Filter cards from the full original list, not the currently displayed cards
-      const filteredCards = allCards.filter(card => {
-        const tags = Array.from(card.querySelectorAll('.tags .tag'))
-          .map(tag => tag.textContent.toLowerCase());
-  
-        // Extract year, category, and type
-        const cardYear = tags.find(t => /^\d{4}$/.test(t.replace('#','')));
-        // const cardCategory = tags.find(t => ['#ai:cv', '#healthcare', '#education'].includes(t));
-        const validCategories = [
-            '#ai:cv',
-            '#ai:nlp',
-            '#ai:llm',
-            '#ai:time series model',
-            '#ai:ml',
-            '#ai:hci',
-            '#ai:rl',
-            '#healthcare',
-            '#wearable',
-            '#biochemistry',
-            '#material science',
-            '#cultural heritage conservation',
-            '#archeaology',
-            '#education',
-            '#additive manufacturing'
-          ];
-          
-        const categoryMatch = category === 'all' || 
-            tags.some(t => validCategories.includes(t) && t.includes(category));
-          
-        const cardType = tags.find(t => ['#journal', '#conference', '#workshop'].includes(t));
-  
-        // Extract title and description text
-        const title = card.querySelector('.project-title').textContent.toLowerCase();
-        const description = card.querySelector('.project-description').textContent.toLowerCase();
-  
-        // Filters: true if filter is 'all' or matches card attribute
-        // const categoryMatch = category === 'all' || (cardCategory && cardCategory.includes(category));
-        const yearMatch = year === 'all' || (cardYear && cardYear.includes(year));
-        const typeMatch = type === 'all' || (cardType && cardType.includes(type));
-        const keywordMatch = !keyword || title.includes(keyword) || description.includes(keyword);
-  
-        return categoryMatch && yearMatch && typeMatch && keywordMatch;
-      });
-  
-      // Sort filtered cards by year descending (newest first)
-      filteredCards.sort((a, b) => {
-        const getYear = card => {
-          const tags = Array.from(card.querySelectorAll('.tags .tag'));
-          for (const tag of tags) {
-            const txt = tag.textContent.replace('#', '');
-            if (/^\d{4}$/.test(txt)) return parseInt(txt);
-          }
-          return 0;
-        };
-        return getYear(b) - getYear(a);
-      });
-  
-      // Clear grid and append filtered cards
-      grid.innerHTML = '';
-      filteredCards.forEach(card => grid.appendChild(card));
-    });
-  })();
-  
-  const menuToggle = document.getElementById("menu-toggle");
-const navLinks = document.querySelector(".nav-links");
+  const normalize = (value) => (value || '').toLowerCase().trim();
+  const yearFilter = document.getElementById('yearFilter');
+  const typeFilter = document.getElementById('typeFilter');
+  const searchInput = document.getElementById('searchInput');
+  const applyButton = document.getElementById('applyFilters');
+  const resetButton = document.getElementById('resetFilters');
+  const filterPanel = document.getElementById('filter-panel');
+  const yearSections = Array.from(document.querySelectorAll('.container[data-year]'));
 
-menuToggle.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-});
-  
+  function applyFilters() {
+    if (!yearFilter || !typeFilter || !searchInput) return;
+
+    const selectedYear = yearFilter.value;
+    const selectedType = normalize(typeFilter.value);
+    const query = normalize(searchInput.value);
+    let visibleItems = 0;
+
+    yearSections.forEach((section) => {
+      const matchesYear = selectedYear === 'all' || section.dataset.year === selectedYear;
+      const cards = Array.from(section.querySelectorAll('.research-card'));
+      const supplementalItems = Array.from(section.children).filter((child) =>
+        child.classList.contains('pub-item')
+      );
+
+      cards.forEach((card) => {
+        const tags = Array.from(card.querySelectorAll('.tag')).map((tag) =>
+          normalize(tag.textContent).replace(/^#/, '')
+        );
+        const matchesType = selectedType === 'all' || tags.includes(selectedType);
+        const matchesQuery = !query || normalize(card.textContent).includes(query);
+        const show = matchesYear && matchesType && matchesQuery;
+
+        card.hidden = !show;
+        if (show) visibleItems += 1;
+      });
+
+      supplementalItems.forEach((item) => {
+        const matchesQuery = !query || normalize(item.textContent).includes(query);
+        const show = matchesYear && selectedType === 'all' && matchesQuery;
+
+        item.hidden = !show;
+        if (show) visibleItems += 1;
+      });
+
+      section.hidden = !matchesYear || !section.querySelector('.research-card:not([hidden]), .pub-item:not([hidden])');
+    });
+
+    let emptyNote = document.getElementById('no-result-note');
+    if (visibleItems === 0 && filterPanel) {
+      if (!emptyNote) {
+        emptyNote = document.createElement('p');
+        emptyNote.id = 'no-result-note';
+        emptyNote.className = 'filter-empty-note';
+        emptyNote.textContent = 'No publications match the current filters.';
+        filterPanel.insertAdjacentElement('afterend', emptyNote);
+      }
+    } else if (emptyNote) {
+      emptyNote.remove();
+    }
+  }
+
+  if (applyButton) applyButton.addEventListener('click', applyFilters);
+  if (resetButton) {
+    resetButton.addEventListener('click', () => {
+      yearFilter.value = 'all';
+      typeFilter.value = 'all';
+      searchInput.value = '';
+      applyFilters();
+    });
+  }
+  if (yearFilter) yearFilter.addEventListener('change', applyFilters);
+  if (typeFilter) typeFilter.addEventListener('change', applyFilters);
+  if (searchInput) {
+    searchInput.addEventListener('input', applyFilters);
+    searchInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        searchInput.value = '';
+        applyFilters();
+      }
+    });
+  }
+
+  applyFilters();
+
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('active');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+})();
