@@ -22,26 +22,168 @@ if (menuToggle && navLinks) {
 
   const feedPulseSiteId = (card.dataset.feedpulseSiteId || '').trim();
 
-  if (feedPulseSiteId && feedPulseSiteId !== 'YOUR_SITE_ID') {
-    const liveMount = document.createElement('div');
-    const liveScript = document.createElement('script');
+  const loadGlobeLibrary = () => new Promise((resolve, reject) => {
+    if (typeof window.Globe === 'function') {
+      resolve(window.Globe);
+      return;
+    }
 
-    liveMount.className = 'visitor-globe-live-mount';
-    liveScript.async = true;
-    liveScript.referrerPolicy = 'strict-origin-when-cross-origin';
-    liveScript.src = `https://feed-pulse.com/api/embed/visitor-globe.js?site_id=${encodeURIComponent(feedPulseSiteId)}&map=globe&sz=sm&theme=indigo&speed=slow`;
-    liveScript.addEventListener('load', () => {
+    const existingScript = document.querySelector('script[data-visitor-globe-library]');
+    if (existingScript) {
+      existingScript.addEventListener('load', () => resolve(window.Globe), { once: true });
+      existingScript.addEventListener('error', reject, { once: true });
+      return;
+    }
+
+    const libraryScript = document.createElement('script');
+    libraryScript.async = true;
+    libraryScript.dataset.visitorGlobeLibrary = 'true';
+    libraryScript.referrerPolicy = 'strict-origin-when-cross-origin';
+    libraryScript.src = 'https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js';
+    libraryScript.addEventListener('load', () => resolve(window.Globe), { once: true });
+    libraryScript.addEventListener('error', reject, { once: true });
+    document.head.appendChild(libraryScript);
+  });
+
+  const startRealisticGlobe = async () => {
+    const mount = document.createElement('div');
+    const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let world;
+
+    mount.className = 'visitor-globe-realistic-mount';
+    mount.setAttribute('role', 'img');
+    mount.setAttribute('aria-label', 'Interactive globe showing approximate visitor locations. Drag to rotate and scroll to zoom.');
+    stage.appendChild(mount);
+    message.textContent = 'Loading visitor locations...';
+
+    try {
+      const GlobeConstructor = await loadGlobeLibrary();
+      if (typeof GlobeConstructor !== 'function') {
+        throw new Error('The 3D globe library did not initialize');
+      }
+
+      const getGlobeSize = () => Math.max(220, Math.floor(stage.getBoundingClientRect().width));
+      const initialSize = getGlobeSize();
+
+      world = new GlobeConstructor(mount, {
+        animateIn: false,
+        rendererConfig: { antialias: true, alpha: true }
+      })
+        .width(initialSize)
+        .height(initialSize)
+        .backgroundColor('rgba(0, 0, 0, 0)')
+        .globeImageUrl('https://cdn.jsdelivr.net/npm/three-globe@2.45.2/example/img/earth-blue-marble.jpg')
+        .bumpImageUrl('https://cdn.jsdelivr.net/npm/three-globe@2.45.2/example/img/earth-topology.png')
+        .showAtmosphere(true)
+        .atmosphereColor('#a855f7')
+        .atmosphereAltitude(0.18)
+        .showGraticules(true)
+        .pointsData([])
+        .pointLat('lat')
+        .pointLng('lng')
+        .pointColor(() => '#f0abfc')
+        .pointAltitude(0.018)
+        .pointRadius(0.42)
+        .pointResolution(12)
+        .pointLabel(() => 'Approximate visitor location')
+        .pointOfView({ lat: 22, lng: 105, altitude: 2.15 });
+
+      const controls = world.controls();
+      controls.autoRotate = !shouldReduceMotion;
+      controls.autoRotateSpeed = 0.35;
+      controls.enableRotate = true;
+      controls.enableZoom = true;
+      controls.enablePan = false;
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.08;
+      controls.rotateSpeed = 0.55;
+      controls.zoomSpeed = 0.7;
+
       canvas.hidden = true;
       card.classList.add('feedpulse-active');
       statusText.textContent = 'Live';
-    });
-    liveScript.addEventListener('error', () => {
-      liveMount.remove();
+
+      const syncGlobeSize = () => {
+        const nextSize = getGlobeSize();
+        world.width(nextSize).height(nextSize);
+      };
+
+      if ('ResizeObserver' in window) {
+        const globeResizeObserver = new ResizeObserver(syncGlobeSize);
+        globeResizeObserver.observe(stage);
+      } else {
+        window.addEventListener('resize', syncGlobeSize);
+      }
+
+      window.requestAnimationFrame(syncGlobeSize);
+
+      const loadVisitors = async () => {
+        try {
+          const response = await fetch(
+            `https://feed-pulse.com/api/visitor-map/${encodeURIComponent(feedPulseSiteId)}?hours=24&limit=400`,
+            {
+              credentials: 'omit',
+              referrerPolicy: 'strict-origin-when-cross-origin'
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`Visitor service returned ${response.status}`);
+          }
+
+          const data = await response.json();
+          const rawPoints = Array.isArray(data.points)
+            ? data.points
+            : (Array.isArray(data.visitors) ? data.visitors : []);
+          const points = rawPoints.reduce((validPoints, item) => {
+            const lat = Number(item.lat ?? item.latitude);
+            const lng = Number(item.lng ?? item.lon ?? item.longitude);
+
+            if (Number.isFinite(lat) && Number.isFinite(lng)) {
+              validPoints.push({ ...item, lat, lng });
+            }
+            return validPoints;
+          }, []);
+          const reportedCount = Number(data.count ?? data.total);
+          const visitorCount = Number.isFinite(reportedCount) ? reportedCount : points.length;
+
+          world.pointsData(points);
+          statusText.textContent = visitorCount === 1 ? '1 visitor' : `${visitorCount} visitors`;
+          message.textContent = 'Last 24 hours · drag to rotate · scroll to zoom';
+          mount.setAttribute(
+            'aria-label',
+            `Interactive globe with ${visitorCount} approximate visitor ${visitorCount === 1 ? 'location' : 'locations'}. Drag to rotate and scroll to zoom.`
+          );
+        } catch (error) {
+          statusText.textContent = 'Interactive';
+          message.textContent = 'Visitor data is temporarily unavailable · drag to rotate';
+        }
+      };
+
+      await loadVisitors();
+      window.setInterval(loadVisitors, 45000);
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          world.pauseAnimation();
+        } else {
+          world.resumeAnimation();
+        }
+      });
+    } catch (error) {
+      if (world && typeof world._destructor === 'function') {
+        world._destructor();
+      }
+      mount.remove();
+      canvas.hidden = false;
+      card.classList.remove('feedpulse-active');
       statusText.textContent = 'Interactive';
-      message.textContent = 'Live data is temporarily unavailable';
-    });
-    liveMount.appendChild(liveScript);
-    stage.appendChild(liveMount);
+      message.textContent = '3D globe is unavailable; using the lightweight fallback';
+    }
+  };
+
+  if (feedPulseSiteId && feedPulseSiteId !== 'YOUR_SITE_ID') {
+    startRealisticGlobe();
   }
 
   const context = canvas.getContext('2d');
@@ -143,6 +285,10 @@ if (menuToggle && navLinks) {
   };
 
   const drawGlobe = (time) => {
+    if (card.classList.contains('feedpulse-active')) {
+      return;
+    }
+
     resizeCanvas();
     context.clearRect(0, 0, canvasSize, canvasSize);
 
