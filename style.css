@@ -501,15 +501,11 @@
     text-transform: uppercase;
   }
 
-  .visitor-globe-attribution:hover {
-    color: #f5d0fe;
-  }
-
-  .visitor-globe-card.feedpulse-active {
+  .visitor-globe-card.visitor-data-active {
     min-height: 0;
   }
 
-  .visitor-globe-card.feedpulse-active .visitor-globe-stage {
+  .visitor-globe-card.visitor-data-active .visitor-globe-stage {
     aspect-ratio: 1;
     min-height: 0;
   }
@@ -534,12 +530,12 @@
     outline: none;
   }
 
-  .visitor-globe-card.feedpulse-active .visitor-location-button,
-  .visitor-globe-card.feedpulse-active .visitor-globe-privacy {
+  .visitor-globe-card.visitor-data-active .visitor-location-button,
+  .visitor-globe-card.visitor-data-active .visitor-globe-privacy {
     display: none;
   }
 
-  .visitor-globe-card.feedpulse-active .visitor-globe-halo {
+  .visitor-globe-card.visitor-data-active .visitor-globe-halo {
     display: none;
   }
 

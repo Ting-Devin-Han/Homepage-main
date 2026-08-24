@@ -20,7 +20,7 @@ if (menuToggle && navLinks) {
     return;
   }
 
-  const feedPulseSiteId = (card.dataset.feedpulseSiteId || '').trim();
+  const visitorApiUrl = (card.dataset.visitorApi || '').trim();
 
   const loadGlobeLibrary = () => new Promise((resolve, reject) => {
     if (typeof window.Globe === 'function') {
@@ -86,6 +86,13 @@ if (menuToggle && navLinks) {
         .pointRadius(0.42)
         .pointResolution(12)
         .pointLabel(() => 'Approximate visitor location')
+        .ringsData([])
+        .ringLat('lat')
+        .ringLng('lng')
+        .ringColor(() => ['rgba(240, 171, 252, 0.9)', 'rgba(168, 85, 247, 0)'])
+        .ringMaxRadius(1.8)
+        .ringPropagationSpeed(0.65)
+        .ringRepeatPeriod(1600)
         .pointOfView({ lat: 22, lng: 105, altitude: 2.15 });
 
       const controls = world.controls();
@@ -100,7 +107,7 @@ if (menuToggle && navLinks) {
       controls.zoomSpeed = 0.7;
 
       canvas.hidden = true;
-      card.classList.add('feedpulse-active');
+      card.classList.add('visitor-data-active');
       statusText.textContent = 'Live';
 
       const syncGlobeSize = () => {
@@ -117,15 +124,33 @@ if (menuToggle && navLinks) {
 
       window.requestAnimationFrame(syncGlobeSize);
 
-      const loadVisitors = async () => {
+      const requestVisitors = async (recordVisit) => {
+        const response = await fetch(visitorApiUrl, {
+          method: recordVisit ? 'POST' : 'GET',
+          credentials: 'omit',
+          referrerPolicy: 'strict-origin-when-cross-origin',
+          headers: {
+            'Accept': 'application/json',
+            ...(recordVisit ? { 'Content-Type': 'application/json' } : {})
+          },
+          body: recordVisit ? '{}' : undefined
+        });
+
+        if (!response.ok && recordVisit) {
+          return fetch(visitorApiUrl, {
+            method: 'GET',
+            credentials: 'omit',
+            referrerPolicy: 'strict-origin-when-cross-origin',
+            headers: { 'Accept': 'application/json' }
+          });
+        }
+
+        return response;
+      };
+
+      const loadVisitors = async (recordVisit = false) => {
         try {
-          const response = await fetch(
-            `https://feed-pulse.com/api/visitor-map/${encodeURIComponent(feedPulseSiteId)}?hours=24&limit=400`,
-            {
-              credentials: 'omit',
-              referrerPolicy: 'strict-origin-when-cross-origin'
-            }
-          );
+          const response = await requestVisitors(recordVisit);
 
           if (!response.ok) {
             throw new Error(`Visitor service returned ${response.status}`);
@@ -147,12 +172,14 @@ if (menuToggle && navLinks) {
           const reportedCount = Number(data.count ?? data.total);
           const visitorCount = Number.isFinite(reportedCount) ? reportedCount : points.length;
 
-          world.pointsData(points);
-          statusText.textContent = visitorCount === 1 ? '1 visitor' : `${visitorCount} visitors`;
-          message.textContent = 'Last 24 hours · drag to rotate · scroll to zoom';
+          world
+            .pointsData(points)
+            .ringsData(points.slice(-40));
+          statusText.textContent = visitorCount === 1 ? '1 record' : `${visitorCount} records`;
+          message.textContent = 'All recorded visits · drag to rotate · scroll to zoom';
           mount.setAttribute(
             'aria-label',
-            `Interactive globe with ${visitorCount} approximate visitor ${visitorCount === 1 ? 'location' : 'locations'}. Drag to rotate and scroll to zoom.`
+            `Interactive globe with ${visitorCount} approximate visitor ${visitorCount === 1 ? 'record' : 'records'}. Drag to rotate and scroll to zoom.`
           );
         } catch (error) {
           statusText.textContent = 'Interactive';
@@ -160,8 +187,8 @@ if (menuToggle && navLinks) {
         }
       };
 
-      await loadVisitors();
-      window.setInterval(loadVisitors, 45000);
+      await loadVisitors(true);
+      window.setInterval(() => loadVisitors(false), 45000);
 
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
@@ -176,13 +203,13 @@ if (menuToggle && navLinks) {
       }
       mount.remove();
       canvas.hidden = false;
-      card.classList.remove('feedpulse-active');
+      card.classList.remove('visitor-data-active');
       statusText.textContent = 'Interactive';
       message.textContent = '3D globe is unavailable; using the lightweight fallback';
     }
   };
 
-  if (feedPulseSiteId && feedPulseSiteId !== 'YOUR_SITE_ID') {
+  if (visitorApiUrl) {
     startRealisticGlobe();
   }
 
@@ -285,7 +312,7 @@ if (menuToggle && navLinks) {
   };
 
   const drawGlobe = (time) => {
-    if (card.classList.contains('feedpulse-active')) {
+    if (card.classList.contains('visitor-data-active')) {
       return;
     }
 
