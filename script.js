@@ -29,7 +29,7 @@ if (menuToggle && navLinks) {
     liveMount.className = 'visitor-globe-live-mount';
     liveScript.async = true;
     liveScript.referrerPolicy = 'strict-origin-when-cross-origin';
-    liveScript.src = `https://feed-pulse.com/api/embed/visitor-globe.js?site_id=${encodeURIComponent(feedPulseSiteId)}&map=globe&sz=md&theme=indigo&speed=slow`;
+    liveScript.src = `https://feed-pulse.com/api/embed/visitor-globe.js?site_id=${encodeURIComponent(feedPulseSiteId)}&map=globe&sz=sm&theme=indigo&speed=slow`;
     liveScript.addEventListener('load', () => {
       canvas.hidden = true;
       card.classList.add('feedpulse-active');

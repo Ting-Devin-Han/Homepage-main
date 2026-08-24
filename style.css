@@ -430,6 +430,10 @@
     touch-action: none;
   }
 
+  #visitor-globe[hidden] {
+    display: none;
+  }
+
   #visitor-globe:active {
     cursor: grabbing;
   }
@@ -492,6 +496,30 @@
   .visitor-globe-card.feedpulse-active .visitor-globe-stage {
     aspect-ratio: auto;
     min-height: 320px;
+  }
+
+  .visitor-globe-live-mount {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .visitor-globe-live-mount > div {
+    max-width: 100%;
+    padding: 0 !important;
+    color: #ddd6fe !important;
+    background: transparent !important;
+  }
+
+  .visitor-globe-live-mount canvas {
+    max-width: 100%;
+    height: auto !important;
+    margin: 0 auto;
+    filter: hue-rotate(38deg) saturate(1.08);
+  }
+
+  .visitor-globe-live-mount [data-fp-attribution] {
+    color: #c4b5fd !important;
   }
 
   .visitor-globe-card.feedpulse-active .visitor-globe-halo,
