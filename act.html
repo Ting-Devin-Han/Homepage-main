@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ting Han's Activities</title>
   <link rel="stylesheet" href="act_style.css" />
-  <link rel="stylesheet" href="theme.css?v=20260825a" />
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css?v=1.9.4" />
+  <link rel="stylesheet" href="theme.css?v=20260825c" />
 </head>
 <body>
     <header>
@@ -21,6 +22,38 @@
 
       <main class="act-main">
         <div class="act-container">
+
+          <section class="activity-map-section" aria-labelledby="activity-map-title">
+            <div class="activity-map-heading">
+              <p class="activity-map-kicker">Field notes · conferences · collaborations</p>
+              <h1 id="activity-map-title">Activities Around the World</h1>
+              <p>Explore the places behind the gallery. Drag or zoom the map, then select a glowing location to open its activity record.</p>
+            </div>
+
+            <div class="activity-map-layout">
+              <div class="activity-map-panel">
+                <div
+                  id="activity-world-map"
+                  class="activity-world-map"
+                  role="application"
+                  aria-label="Interactive world map of academic activities"
+                  aria-describedby="activity-map-status"
+                ></div>
+                <p id="activity-map-status" class="activity-map-status">Loading activity map…</p>
+              </div>
+
+              <aside class="activity-location-panel" aria-label="Activity locations">
+                <div class="activity-location-panel-header">
+                  <span>Location index</span>
+                  <strong id="activity-map-summary">10 cities · 11 activities</strong>
+                </div>
+                <div id="activity-location-list" class="activity-location-list"></div>
+                <noscript>
+                  <p class="activity-map-fallback">Enable JavaScript to explore the interactive location map.</p>
+                </noscript>
+              </aside>
+            </div>
+          </section>
           
           <!-- Photography Section -->
           <section class="gallery-wall">
@@ -283,6 +316,9 @@
         <img class="modal-content" id="modal-img">
       </div>
 
+      <script src="vendor/leaflet/leaflet.js?v=1.9.4"></script>
+      <script src="activity-map.js?v=20260825a"></script>
+      <script src="theme-effects.js?v=20260825b"></script>
       <script src="act.js"></script>
     </body>
     </html>
