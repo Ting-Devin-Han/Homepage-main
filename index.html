@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Welcome to Ting Han's Homepage</title>
   <link rel="stylesheet" href="style.css?v=20260824f" />
-  <link rel="stylesheet" href="theme.css?v=20260825c" />
+  <link rel="stylesheet" href="theme.css?v=20260825d" />
 </head>
 <body>
   <header>
@@ -28,6 +28,75 @@
   
   <!-- MAIN CONTENT -->
   <main>
+    <section class="research-scene" id="research-scene" aria-labelledby="research-scene-title">
+      <canvas class="research-scene-canvas" id="research-scene-canvas" aria-hidden="true"></canvas>
+      <div class="research-scene-grid" aria-hidden="true"></div>
+      <div class="research-scene-scanline" aria-hidden="true"></div>
+
+      <div class="research-scene-content">
+        <div class="research-scene-copy">
+          <p class="research-scene-kicker">
+            <span aria-hidden="true"></span>
+            Research signal · active
+          </p>
+          <h1 id="research-scene-title">
+            Mapping intelligence
+            <span>in three dimensions.</span>
+          </h1>
+          <p class="research-scene-lead">
+            Geospatial AI for understanding cities, environments, and the spatial systems that connect them.
+          </p>
+          <div class="research-scene-topics" aria-label="Core research topics">
+            <span>3D point clouds</span>
+            <span>GeoAI</span>
+            <span>Urban systems</span>
+          </div>
+          <div class="research-scene-actions">
+            <a class="research-scene-primary" href="research.html">
+              Explore research
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a class="research-scene-secondary" href="act.html">View field activities</a>
+          </div>
+        </div>
+
+        <aside class="research-scene-telemetry" aria-hidden="true">
+          <div class="research-scene-system">
+            <span class="research-scene-system-mark"></span>
+            <div>
+              <small>3DAI spatial engine</small>
+              <strong>Scene synthesis online</strong>
+            </div>
+            <span class="research-scene-system-code">SYS / 03</span>
+          </div>
+          <div class="research-scene-readouts">
+            <div>
+              <span>INPUT</span>
+              <strong>Multi-source</strong>
+              <small>LiDAR · imagery · language</small>
+            </div>
+            <div>
+              <span>MODEL</span>
+              <strong>Generalizable</strong>
+              <small>Spatial foundation intelligence</small>
+            </div>
+            <div>
+              <span>OUTPUT</span>
+              <strong>Human-centered</strong>
+              <small>Urban and environmental insight</small>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="research-scene-coordinate" aria-hidden="true">
+        <span>22.5431° N</span>
+        <span>114.0579° E</span>
+        <i></i>
+        <span>SPATIAL FIELD / 01</span>
+      </div>
+    </section>
+
     <div class="intro-container">
     <section class="intro-section">
         <div class="left-column">
@@ -138,7 +207,7 @@
           <p>I graduated from the School of Computer Engineering at Jimei University for my master's degree in <strong>Information and Communication Engineering</strong>, where my advisor was Professor <a href="https://cec.jmu.edu.cn/info/1008/4123.htm"><strong>Guorong Cai</strong></a>.</p>
         </div>
         <div class="additional-text">
-            <h1>Topics of Interest</h1>
+            <h1 id="research-focus">Topics of Interest</h1>
             <p>
               My research interests focus on advancing <strong>geospatial artificial intelligence</strong> by integrating <strong>deep learning theories and methods</strong> into 3D point cloud processing for <strong>remote sensing applications</strong>. 
               I aim to develop <strong>interpretable and generalizable AI models</strong> that can effectively analyze <strong>urban morphology</strong>, <strong>vegetation structure</strong>, and <strong>built environments</strong> from multi-source geospatial data. 
@@ -296,6 +365,7 @@
   </footer>
 
   <script src="theme-effects.js?v=20260825b"></script>
+  <script src="research-scene.js?v=20260825a"></script>
   <script src="script.js?v=20260824f"></script>
 </body>
 </html>
