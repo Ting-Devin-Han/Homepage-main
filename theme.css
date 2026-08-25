@@ -865,6 +865,31 @@ body > header {
   transform: translateX(3px);
 }
 
+.activity-location-button.is-base-location {
+  background:
+    radial-gradient(circle at 100% 0, rgba(196, 181, 253, 0.16), transparent 7rem),
+    rgba(109, 40, 217, 0.16);
+  border-color: rgba(196, 181, 253, 0.34);
+  box-shadow: inset 3px 0 0 rgba(167, 139, 250, 0.9), 0 0 22px rgba(124, 58, 237, 0.1);
+}
+
+.activity-location-button.is-base-location .activity-location-name::after {
+  margin-left: 0.45rem;
+  padding: 0.14rem 0.38rem;
+  color: #f5f3ff;
+  content: "BASE";
+  background: rgba(139, 92, 246, 0.38);
+  border: 1px solid rgba(221, 214, 254, 0.3);
+  border-radius: 999px;
+  font-size: 0.52rem;
+  letter-spacing: 0.08em;
+  vertical-align: 0.12rem;
+}
+
+.activity-location-button.is-base-location .activity-location-meta {
+  color: var(--violet-300);
+}
+
 .activity-location-name {
   color: var(--text-primary);
   font-size: 0.9rem;
@@ -908,9 +933,27 @@ body > header {
   color: var(--violet-300) !important;
 }
 
+.activity-world-map .activity-radial-route {
+  stroke-dasharray: 4 9;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px rgba(167, 139, 250, 0.72));
+  animation: activity-route-flow 2.4s linear infinite;
+  animation-delay: var(--route-delay, 0s);
+}
+
+@keyframes activity-route-flow {
+  to {
+    stroke-dashoffset: -26;
+  }
+}
+
 .activity-marker-icon {
   background: transparent !important;
   border: 0 !important;
+}
+
+.activity-base-marker-icon {
+  overflow: visible !important;
 }
 
 .activity-marker-pulse,
@@ -936,6 +979,82 @@ body > header {
   background: #ddd6fe;
   border: 2px solid #8b5cf6;
   box-shadow: 0 0 14px rgba(196, 181, 253, 0.95), 0 0 30px rgba(124, 58, 237, 0.72);
+}
+
+.activity-base-marker-icon .activity-marker-pulse {
+  width: 42px;
+  height: 42px;
+  background: rgba(139, 92, 246, 0.24);
+  border-color: rgba(221, 214, 254, 0.68);
+}
+
+.activity-base-marker-icon .activity-marker-core {
+  width: 13px;
+  height: 13px;
+  background: #ffffff;
+  border-color: #a78bfa;
+  box-shadow: 0 0 18px rgba(238, 231, 255, 1), 0 0 38px rgba(139, 92, 246, 0.95);
+}
+
+.activity-base-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgba(196, 181, 253, 0.55);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.activity-base-orbit::after {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  content: "";
+  background: #f5f3ff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(216, 180, 254, 0.95);
+}
+
+.activity-base-orbit-outer {
+  width: 52px;
+  height: 52px;
+  animation: activity-base-orbit 5s linear infinite;
+}
+
+.activity-base-orbit-inner {
+  width: 34px;
+  height: 34px;
+  border-style: dashed;
+  animation: activity-base-orbit 3.2s linear infinite reverse;
+}
+
+.activity-base-label {
+  position: absolute;
+  top: calc(50% + 31px);
+  left: 50%;
+  padding: 0.18rem 0.42rem;
+  color: #f5f3ff;
+  background: rgba(24, 13, 49, 0.9);
+  border: 1px solid rgba(196, 181, 253, 0.34);
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(4, 1, 12, 0.42);
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+@keyframes activity-base-orbit {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 @keyframes activity-marker-pulse {
@@ -970,6 +1089,14 @@ body > header {
 .activity-map-popup strong {
   color: #ffffff;
   font-size: 1rem;
+}
+
+.activity-map-popup.is-base strong::after {
+  margin-left: 0.4rem;
+  color: var(--violet-300);
+  content: "BASE";
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
 }
 
 .activity-map-popup span {

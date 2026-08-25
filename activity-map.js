@@ -6,6 +6,8 @@
 
   if (!mapElement || !listElement) return;
 
+  const baseCity = 'Zhuhai';
+
   const activityRecords = [
     { id: 'activity-dubai-apr-2025', city: 'Dubai', region: 'UAE', date: 'April 2025', coordinates: [25.2048, 55.2708] },
     { id: 'activity-zhuhai-jun-2025', city: 'Zhuhai', region: 'China', date: 'June 2025', coordinates: [22.271, 113.5767] },
@@ -49,6 +51,12 @@
     }, new Map()).values()
   );
 
+  groupedLocations.sort((first, second) => {
+    if (first.city === baseCity) return -1;
+    if (second.city === baseCity) return 1;
+    return 0;
+  });
+
   if (summaryElement) {
     summaryElement.textContent = `${groupedLocations.length} cities · ${activityRecords.length} activities`;
   }
@@ -80,6 +88,7 @@
   const createLocationButton = (location) => {
     const button = document.createElement('button');
     button.className = 'activity-location-button';
+    if (location.city === baseCity) button.classList.add('is-base-location');
     button.type = 'button';
     button.dataset.city = location.city;
     button.setAttribute('aria-pressed', 'false');
@@ -90,7 +99,9 @@
 
     const meta = document.createElement('span');
     meta.className = 'activity-location-meta';
-    meta.textContent = `${location.region} · ${location.records.length} ${location.records.length === 1 ? 'activity' : 'activities'}`;
+    meta.textContent = location.city === baseCity
+      ? `3DSTAILAB base · ${location.records.length} activities`
+      : `${location.region} · ${location.records.length} ${location.records.length === 1 ? 'activity' : 'activities'}`;
 
     button.append(name, meta);
     button.addEventListener('click', () => {
@@ -140,14 +151,24 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  const routeCoordinates = activityRecords.map((record) => record.coordinates);
-  window.L.polyline(routeCoordinates, {
-    color: '#a78bfa',
-    weight: 1.5,
-    opacity: 0.55,
-    dashArray: '5 8',
-    interactive: false
-  }).addTo(map);
+  const baseLocation = groupedLocations.find((location) => location.city === baseCity);
+  const destinationLocations = groupedLocations.filter((location) => location.city !== baseCity);
+
+  if (baseLocation) {
+    destinationLocations.forEach((location, index) => {
+      const route = window.L.polyline([baseLocation.coordinates, location.coordinates], {
+        className: 'activity-radial-route',
+        color: '#a78bfa',
+        weight: 1.6,
+        opacity: 0.68,
+        dashArray: '4 9',
+        lineCap: 'round',
+        interactive: false
+      }).addTo(map);
+
+      route.getElement()?.style.setProperty('--route-delay', `${(-index * 0.22).toFixed(2)}s`);
+    });
+  }
 
   const markerIcon = window.L.divIcon({
     className: 'activity-marker-icon',
@@ -157,20 +178,38 @@
     popupAnchor: [0, -13]
   });
 
+  const baseMarkerIcon = window.L.divIcon({
+    className: 'activity-marker-icon activity-base-marker-icon',
+    html: `
+      <span class="activity-base-orbit activity-base-orbit-outer"></span>
+      <span class="activity-base-orbit activity-base-orbit-inner"></span>
+      <span class="activity-marker-pulse"></span>
+      <span class="activity-marker-core"></span>
+      <span class="activity-base-label">Zhuhai base</span>
+    `,
+    iconSize: [52, 52],
+    iconAnchor: [26, 26],
+    popupAnchor: [0, -23]
+  });
+
   groupedLocations.forEach((location) => {
     const eventLinks = location.records.map((record) => (
       `<li><a href="#${record.id}" data-activity-target="${record.id}">${record.date}</a></li>`
     )).join('');
 
+    const isBase = location.city === baseCity;
     const popupContent = `
-      <div class="activity-map-popup">
+      <div class="activity-map-popup${isBase ? ' is-base' : ''}">
         <strong>${location.city}</strong>
-        <span>${location.region}</span>
+        <span>${isBase ? '3DSTAILAB base · China' : location.region}</span>
         <ul>${eventLinks}</ul>
       </div>
     `;
 
-    const marker = window.L.marker(location.coordinates, { icon: markerIcon })
+    const marker = window.L.marker(location.coordinates, {
+      icon: isBase ? baseMarkerIcon : markerIcon,
+      zIndexOffset: isBase ? 1000 : 0
+    })
       .addTo(map)
       .bindPopup(popupContent, { closeButton: false, offset: [0, -4] });
 
@@ -181,6 +220,8 @@
     markerByCity.set(location.city, marker);
   });
 
+  setActiveLocation(baseCity);
+
   mapElement.addEventListener('click', (event) => {
     const activityLink = event.target.closest('[data-activity-target]');
     if (!activityLink) return;
@@ -189,7 +230,7 @@
   });
 
   if (statusElement) {
-    statusElement.textContent = 'Interactive map ready. Drag to explore, use +/− to zoom, and select a glowing location.';
+    statusElement.textContent = 'Zhuhai base connected to 9 activity cities. Drag to explore and use +/− to zoom.';
   }
 
   window.setTimeout(() => map.invalidateSize(), 0);
