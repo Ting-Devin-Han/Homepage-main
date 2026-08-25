@@ -12,11 +12,10 @@ if (menuToggle && navLinks) {
   const card = document.querySelector('.visitor-globe-card');
   const canvas = document.getElementById('visitor-globe');
   const stage = document.getElementById('visitor-globe-stage');
-  const message = document.getElementById('visitor-globe-message');
   const locationButton = document.getElementById('visitor-location-button');
   const statusText = document.getElementById('visitor-globe-status-text');
 
-  if (!card || !canvas || !stage || !message || !locationButton || !statusText) {
+  if (!card || !canvas || !stage || !locationButton || !statusText) {
     return;
   }
 
@@ -54,7 +53,6 @@ if (menuToggle && navLinks) {
     mount.setAttribute('role', 'img');
     mount.setAttribute('aria-label', 'Interactive globe showing approximate visitor locations. Drag to rotate and scroll to zoom.');
     stage.appendChild(mount);
-    message.textContent = 'Loading visitor locations...';
 
     try {
       const GlobeConstructor = await loadGlobeLibrary();
@@ -176,14 +174,12 @@ if (menuToggle && navLinks) {
             .pointsData(points)
             .ringsData(points.slice(-40));
           statusText.textContent = visitorCount === 1 ? '1 record' : `${visitorCount} records`;
-          message.textContent = 'All recorded visits · drag to rotate · scroll to zoom';
           mount.setAttribute(
             'aria-label',
             `Interactive globe with ${visitorCount} approximate visitor ${visitorCount === 1 ? 'record' : 'records'}. Drag to rotate and scroll to zoom.`
           );
         } catch (error) {
           statusText.textContent = 'Interactive';
-          message.textContent = 'Visitor data is temporarily unavailable · drag to rotate';
         }
       };
 
@@ -205,7 +201,6 @@ if (menuToggle && navLinks) {
       canvas.hidden = false;
       card.classList.remove('visitor-data-active');
       statusText.textContent = 'Interactive';
-      message.textContent = '3D globe is unavailable; using the lightweight fallback';
     }
   };
 
@@ -215,7 +210,6 @@ if (menuToggle && navLinks) {
 
   const context = canvas.getContext('2d');
   if (!context) {
-    message.textContent = 'Your browser cannot render the visitor globe';
     locationButton.hidden = true;
     return;
   }
