@@ -704,6 +704,13 @@
     gap: 2rem;
     justify-items: center; /* optional: center cards in each cell */
   }
+
+  /* Browser extensions may inject DOI helper links beside publication cards.
+     Keep those helpers from becoming empty grid items. */
+  #research-grid > :not(.research-card),
+  .research-grid > :not(.research-card) {
+    display: none !important;
+  }
   
   
   .research-card {
