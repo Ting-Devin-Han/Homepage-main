@@ -355,6 +355,12 @@ body > header {
   color: var(--text-primary) !important;
 }
 
+.pub-content > h3:not(:first-child) {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(196, 181, 253, 0.12);
+}
+
 .skill-tag,
 .tag {
   color: var(--violet-200) !important;
