@@ -1585,11 +1585,8 @@ footer p {
 }
 
 .showcase-preview--gba .showcase-preview-media {
-  width: 140%;
-  max-width: none;
   object-fit: cover;
   object-position: center;
-  animation: showcase-gba-focus 22s cubic-bezier(0.45, 0, 0.55, 1) -5s infinite alternate;
 }
 
 .showcase-preview-scope {
@@ -1713,17 +1710,6 @@ footer p {
   84%,
   100% {
     transform: translate3d(0, -21.8%, 0) scale(1.002);
-  }
-}
-
-@keyframes showcase-gba-focus {
-  0%,
-  12% {
-    transform: translate3d(0, 0, 0) scale(1.004);
-  }
-  88%,
-  100% {
-    transform: translate3d(-28.5%, 0, 0) scale(1.004);
   }
 }
 
