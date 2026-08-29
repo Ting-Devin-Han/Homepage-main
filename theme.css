@@ -1574,11 +1574,8 @@ footer p {
 }
 
 .showcase-preview--holoworld .showcase-preview-media {
-  width: 155%;
-  max-width: none;
   object-fit: cover;
   object-position: center;
-  animation: showcase-holoworld-focus 24s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
 }
 
 .showcase-preview--atlas iframe {
@@ -1705,17 +1702,6 @@ footer p {
   }
   to {
     background-position: -110% 0;
-  }
-}
-
-@keyframes showcase-holoworld-focus {
-  0%,
-  12% {
-    transform: translate3d(-18%, 0, 0) scale(1.005);
-  }
-  88%,
-  100% {
-    transform: translate3d(-35.4%, 0, 0) scale(1.005);
   }
 }
 
